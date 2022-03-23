@@ -45,7 +45,7 @@ export default class APIServer extends Server {
         this.addControllers(new RootAPIController())
         // this.addControllers(new StaticSiteController())
         const schema = await buildGraphQLSchema()
-        this.app.use('/graphql', graphqlHTTP({ schema }))
+        this.app.use('/graphql', graphqlHTTP({ schema, graphiql: true }))
     }
 
     public async start(port: number) {

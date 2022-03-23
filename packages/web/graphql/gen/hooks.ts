@@ -62,6 +62,7 @@ export const WhoAmIDocument = gql`
             firebaseUid
             displayName
             email
+            uniqueSlug
         }
     }
 `

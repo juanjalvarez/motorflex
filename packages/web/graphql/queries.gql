@@ -8,5 +8,6 @@ query WhoAmI {
         firebaseUid
         displayName
         email
+        uniqueSlug
     }
 }

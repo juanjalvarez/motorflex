@@ -33,11 +33,16 @@ export type CreateVehicleInput = {
 export type Mutation = {
     __typename?: 'Mutation'
     createVehicle: Vehicle
+    updateProfile: User
     updateVehicle: Vehicle
 }
 
 export type MutationCreateVehicleArgs = {
     input: CreateVehicleInput
+}
+
+export type MutationUpdateProfileArgs = {
+    input: UpdateUserProfileInput
 }
 
 export type MutationUpdateVehicleArgs = {
@@ -49,6 +54,10 @@ export type Query = {
     __typename?: 'Query'
     health: Scalars['Float']
     whoAmI: User
+}
+
+export type UpdateUserProfileInput = {
+    uniqueSlug?: InputMaybe<Scalars['String']>
 }
 
 export type UpdateVehicleInput = {
@@ -71,6 +80,7 @@ export type User = {
     id: Scalars['Int']
     ownedVehicles: Array<Vehicle>
     profilePhotoURL?: Maybe<Scalars['String']>
+    uniqueSlug: Scalars['ID']
     updatedAt: Scalars['String']
 }
 

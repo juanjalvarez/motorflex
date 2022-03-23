@@ -14,5 +14,6 @@ export type WhoAmIQuery = {
         firebaseUid: string
         displayName: string
         email: string
+        uniqueSlug: string
     }
 }

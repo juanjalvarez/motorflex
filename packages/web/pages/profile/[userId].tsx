@@ -1,7 +1,0 @@
-import type { NextPage } from 'next'
-
-const ProfilePage: NextPage = () => {
-    return <div>ProfilePage</div>
-}
-
-export default ProfilePage

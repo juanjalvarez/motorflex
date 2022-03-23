@@ -20,7 +20,7 @@ export class UserResolver {
     @Query(() => User)
     @Authorized()
     async whoAmI(@Ctx() ctx: Request) {
-        return ctx.appUser
+        return ctx.appUser!
     }
 
     @FieldResolver(() => [Vehicle])
