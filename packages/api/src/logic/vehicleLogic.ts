@@ -20,6 +20,13 @@ export const getVehicleByID = async (em: EntityManager, id: number) => {
     return result as Vehicle | null
 }
 
+export const getUserBySlug = async (em: EntityManager, slug: string) => {
+    const user = await em.findOne(User, {
+        uniqueSlug: slug,
+    })
+    return user as User | null
+}
+
 export const createVehicle = async (
     em: EntityManager,
     creationUser: User,

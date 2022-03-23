@@ -21,4 +21,7 @@ tmux send-keys -t 'gql-codegen' 'docker logs -f motorflex-gqlcodegen-1' C-m
 tmux new-window -t $session:4 -n 'firebase'
 tmux send-keys -t 'firebase' 'docker logs -f motorflex-firebase-1' C-m
 
+tmux new-window -t $session:5 -n 'sqlpad'
+tmux send-keys -t 'sqlpad' 'docker logs -f motorflex-sqlpad-1' C-m
+
 tmux attach-session -t $SESSION:0

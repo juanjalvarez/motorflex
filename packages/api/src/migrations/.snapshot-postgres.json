@@ -44,6 +44,16 @@
           "nullable": false,
           "mappedType": "string"
         },
+        "unique_slug": {
+          "name": "unique_slug",
+          "type": "varchar(64)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 64,
+          "mappedType": "string"
+        },
         "display_name": {
           "name": "display_name",
           "type": "varchar(255)",
@@ -81,6 +91,15 @@
           ],
           "composite": false,
           "keyName": "user_firebase_uid_unique",
+          "primary": false,
+          "unique": true
+        },
+        {
+          "columnNames": [
+            "unique_slug"
+          ],
+          "composite": false,
+          "keyName": "user_unique_slug_unique",
           "primary": false,
           "unique": true
         },

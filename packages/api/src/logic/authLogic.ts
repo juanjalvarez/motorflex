@@ -37,7 +37,10 @@ export const createUserFromFirebaseRecord = async (
     if (record.email) {
         user.email = record.email
     }
+    user.uniqueSlug = record.uid
     await em.persistAndFlush(user)
+    user.uniqueSlug = user.id.toString()
+    await em.flush()
     return user
 }
 

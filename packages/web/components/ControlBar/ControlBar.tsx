@@ -11,7 +11,7 @@ export const ControlBar: React.FC = () => {
         <AppBar position="static" sx={{ flexGrow: 0 }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <Typography variant="h5">MonoRepo</Typography>
+                    <Typography variant="h5">MotorFlex</Typography>
                     <Box sx={{ flexGrow: 1 }}></Box>
                     <Box sx={{ flexGrow: 0 }}>
                         <AuthButtons />

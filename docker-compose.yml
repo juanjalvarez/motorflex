@@ -116,9 +116,33 @@ services:
             /usr/bin/mc policy download minio/motorflex;
             exit 0;
             "
+    sqlpad:
+        profiles: ['all', 'cli-only']
+        image: sqlpad/sqlpad
+        networks:
+            - devnet
+        ports:
+            - '13000:13000'
+        volumes:
+            - ./data/sqlpad:/var/lib/sqlpad
+        depends_on:
+            - postgres
+        environment:
+            SQLPAD_PORT: '13000'
+            SQLPAD_PASSPHRASE: '123$qweR'
+            SQLPAD_REDIS_URI: 'redis'
+            SQLPAD_AUTH_DISABLED: 'true'
+            SQLPAD_CONNECTIONS__devdb__name: 'Dev DB'
+            SQLPAD_CONNECTIONS__devdb__driver: 'postgres'
+            SQLPAD_CONNECTIONS__devdb__host: 'postgres'
+            SQLPAD_CONNECTIONS__devdb__port: '5432'
+            SQLPAD_CONNECTIONS__devdb__database: 'postgres'
+            SQLPAD_CONNECTIONS__devdb__username: 'postgres'
+            SQLPAD_CONNECTIONS__devdb__password: 'postgres'
     terminal:
         profiles: ['all', 'cli-only']
         stdin_open: true
+        stop_signal: SIGKILL
         build:
             context: .
             dockerfile: ./cli/terminal.Dockerfile
@@ -129,6 +153,7 @@ services:
             driver: none
         volumes:
             - .:/app
+            - ~/.gitconfig:/root/.gitconfig
         env_file:
             - ./packages/api/env/docker-compose.env
         deploy:
