@@ -1,0 +1,33 @@
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+.DS_Store
+
+# Dependency directories
+node_modules/
+
+# production
+build
+
+# Yarn Integrity file
+.yarn-integrity
+
+# Webpack
+.webpack/
+
+# Environment file
+/packages/api/env/*
+.docker
+
+# Generated files
+/data
+/firebase/*.log
+
+# API
+/packages/api/temp
+
+# Web
+/packages/web/.next

@@ -1,0 +1,6 @@
+{
+    "verbose": true,
+    "watch": ["src"],
+    "exec": "yarn start",
+    "ext": "ts,tsx"
+}

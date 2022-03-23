@@ -1,0 +1,18 @@
+{
+    "editor.tabSize": 4,
+    "prettier.configPath": ".prettierrc",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "npm.packageManager": "yarn",
+    "search.exclude": {
+        "**.lock": true,
+        "**.log": true
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "prettier.tabWidth": 4
+}

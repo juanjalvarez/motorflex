@@ -1,0 +1,30 @@
+schema: http://api:3001/graphql
+overwrite: true
+
+hooks:
+    afterAllFileWrite:
+        - yarn prettier --write ./graphql/gen
+
+generates:
+    graphql/gen/schemas.ts:
+        documents: 'graphql/**/*.gql'
+        plugins:
+            - typescript
+    graphql/gen/operations.ts:
+        documents: 'graphql/**/*.gql'
+        preset: import-types
+        presetConfig:
+            typesPath: ./schemas
+        plugins:
+            - typescript-operations
+    graphql/gen/hooks.ts:
+        documents: 'graphql/**/*.gql'
+        preset: import-types
+        presetConfig:
+            typesPath: ./operations
+        plugins:
+            - typescript-react-apollo
+        config:
+            withHOC: false
+            withComponent: false
+            withHooks: true

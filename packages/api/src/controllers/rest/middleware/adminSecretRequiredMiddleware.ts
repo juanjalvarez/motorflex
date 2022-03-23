@@ -1,0 +1,13 @@
+import { Middleware } from '@overnightjs/core/lib/decorators/types'
+
+export const adminSecretRequiredMiddleware: Middleware = async (
+    req,
+    res,
+    next,
+) => {
+    const token = req.headers['admin_secret']
+    if (token && token === req.context.secrets.app.adminSecret) {
+        next()
+    }
+    res.status(401).send()
+}

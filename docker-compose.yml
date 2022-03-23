@@ -1,0 +1,139 @@
+version: '3.9'
+services:
+    web:
+        profiles: ['all', 'runtime']
+        image: node:16.6-alpine
+        networks:
+            - devnet
+        working_dir: /app/packages/web
+        ports:
+            - '3000:3000'
+        volumes:
+            - .:/app
+        command: yarn dev
+        depends_on:
+            - api
+        deploy:
+            restart_policy:
+                condition: on-failure
+    gqlcodegen:
+        profiles: ['all', 'runtime']
+        image: node:16.6-alpine
+        networks:
+            - devnet
+        working_dir: /app/packages/web
+        volumes:
+            - .:/app
+        command: yarn gql:codegen:watch
+        depends_on:
+            - api
+        deploy:
+            restart_policy:
+                condition: on-failure
+    api:
+        profiles: ['all', 'runtime']
+        image: node:16.6-alpine
+        networks:
+            - devnet
+        working_dir: /app/packages/api
+        ports:
+            - '3001:3001'
+        volumes:
+            - .:/app
+        command: yarn start:watch
+        depends_on:
+            - postgres
+            - redis
+            - firebase
+            - minio
+        env_file:
+            - ./packages/api/env/docker-compose.env
+        deploy:
+            restart_policy:
+                condition: on-failure
+    firebase:
+        profiles: ['all', 'cli-only']
+        image: node:16.6-alpine
+        networks:
+            - devnet
+        working_dir: /app/packages/firebase
+        ports:
+            - '4000:4000'
+            - '4400:4400'
+            - '4500:4500'
+            - '9099:9099'
+        command: sh /app/packages/firebase/run.sh
+        volumes:
+            - .:/app
+            - ./data/firebase-cache:/root/.cache/firebase/emulators
+    redis:
+        profiles: ['all', 'cli-only']
+        image: redis:6.2.6
+        networks:
+            - devnet
+        ports:
+            - '6379:6379'
+            - '16379:6379'
+        volumes:
+            - ./data/redis-data:/app
+    postgres:
+        profiles: ['all', 'cli-only']
+        image: postgres:9.6.23-bullseye
+        networks:
+            - devnet
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+        ports:
+            - '5432:5432'
+        volumes:
+            - ./data/postgres:/var/lib/postgresql/data
+    minio:
+        profiles: ['all', 'cli-only']
+        image: minio/minio
+        networks:
+            - devnet
+        ports:
+            - '9000:9000'
+            - '9001:9001'
+        command: server --address minio:9000 --console-address minio:9001 /data
+        volumes:
+            - ./data/minio:/data
+        environment:
+            MINIO_ROOT_USER: minio
+            MINIO_ROOT_PASSWORD: minio1234
+    createbuckets:
+        profiles: ['all', 'cli-only']
+        image: minio/mc
+        networks:
+            - devnet
+        depends_on:
+            - minio
+        entrypoint: >
+            /bin/sh -c "
+            /usr/bin/mc config host add minio http://minio:9000 minio minio1234;
+            /usr/bin/mc mb minio/motorflex;
+            /usr/bin/mc policy download minio/motorflex;
+            exit 0;
+            "
+    terminal:
+        profiles: ['all', 'cli-only']
+        stdin_open: true
+        build:
+            context: .
+            dockerfile: ./cli/terminal.Dockerfile
+        networks:
+            - devnet
+        tty: true
+        logging:
+            driver: none
+        volumes:
+            - .:/app
+        env_file:
+            - ./packages/api/env/docker-compose.env
+        deploy:
+            restart_policy:
+                condition: always
+
+networks:
+    devnet:

@@ -1,0 +1,12 @@
+query Health {
+    health
+}
+
+query WhoAmI {
+    whoAmI {
+        id
+        firebaseUid
+        displayName
+        email
+    }
+}

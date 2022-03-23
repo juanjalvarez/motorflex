@@ -1,0 +1,9 @@
+{
+    "tabWidth": 4,
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "arrowParens": "avoid",
+    "quoteProps": "preserve",
+    "react-hooks/exhaustive-deps": "off"
+}
