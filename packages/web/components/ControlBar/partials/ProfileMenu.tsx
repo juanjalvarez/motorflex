@@ -1,8 +1,9 @@
-import { ExitToApp } from '@mui/icons-material'
+import { ExitToApp, AccountBox } from '@mui/icons-material'
 import {
     Avatar,
     Box,
     CardActionArea,
+    Divider,
     ListItemIcon,
     ListItemText,
     Menu,
@@ -33,9 +34,17 @@ export const ProfileMenu: React.FC<Props> = ({ user }) => {
                     setAnchorEl(e.currentTarget)
                 }}
             >
-                <Box display="flex" alignItems="center" paddingX={1} paddingY={0.5}>
+                <Box
+                    display="flex"
+                    alignItems="center"
+                    paddingX={1}
+                    paddingY={0.5}
+                >
                     <Typography marginRight={2}>{user.displayName}</Typography>
-                    <Avatar alt={user.displayName ?? undefined} src={user.photoURL ?? undefined} />
+                    <Avatar
+                        alt={user.displayName ?? undefined}
+                        src={user.photoURL ?? undefined}
+                    />
                 </Box>
             </CardActionArea>
             <Menu
@@ -52,6 +61,18 @@ export const ProfileMenu: React.FC<Props> = ({ user }) => {
                     horizontal: 'right',
                 }}
             >
+                <MenuItem
+                    onClick={async () => {
+                        router.push('/profile')
+                        closeMenu()
+                    }}
+                >
+                    <ListItemIcon>
+                        <AccountBox />
+                    </ListItemIcon>
+                    <Typography>My Profile</Typography>
+                </MenuItem>
+                <Divider />
                 <MenuList>
                     <MenuItem
                         onClick={async () => {
