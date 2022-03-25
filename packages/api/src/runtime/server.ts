@@ -6,13 +6,13 @@ import { RootAPIController } from '../controllers/rest/rootAPIController'
 import express from 'express'
 import { RequestContext } from '@mikro-orm/core'
 
-import { StaticSiteController } from '../controllers/rest/staticSiteController'
 import { corsMiddleware } from '../controllers/rest/middleware/cors'
 import { RuntimeContext } from './context'
 import { getRequestContextMiddleware } from '../controllers/rest/middleware/reqContextMiddleware'
 import { runtimeConfig } from './config'
 import { logger } from '../connections/logger'
 import { graphqlHTTP } from 'express-graphql'
+import { apiResponseDelayMiddleware } from '../controllers/rest/middleware/apiResponseDelayMiddleware'
 
 export default class APIServer extends Server {
     runtimeContext: RuntimeContext
@@ -42,8 +42,10 @@ export default class APIServer extends Server {
         this.app.use((_, __, next) => {
             RequestContext.create(this.runtimeContext.db.em, next)
         })
+        if (runtimeConfig.debug) {
+            this.app.use(apiResponseDelayMiddleware)
+        }
         this.addControllers(new RootAPIController())
-        // this.addControllers(new StaticSiteController())
         const schema = await buildGraphQLSchema()
         this.app.use('/graphql', graphqlHTTP({ schema, graphiql: true }))
     }

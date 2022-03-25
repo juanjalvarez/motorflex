@@ -1,12 +1,12 @@
 import type { NextPage } from 'next'
 import { ProfilePage } from '../../components/pageComponents/ProfilePage'
 import { useAuth } from '../../hooks/useAuth'
-import { CircularProgress } from '@mui/material'
+import { LoadingPage } from '../../components/pageComponents/LoadingPage'
 
 const MyProfilePage: NextPage = () => {
     const { whoAmI, isLoading } = useAuth()
     if (!whoAmI || isLoading) {
-        return <CircularProgress />
+        return <LoadingPage />
     }
     return <ProfilePage slug={whoAmI.uniqueSlug} />
 }

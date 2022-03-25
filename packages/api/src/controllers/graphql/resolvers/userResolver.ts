@@ -10,7 +10,10 @@ import {
     Root,
 } from 'type-graphql'
 import { updateUserProfile } from '../../../logic/userLogic'
-import { getVehiclesOwnedByUser } from '../../../logic/vehicleLogic'
+import {
+    getUserBySlug,
+    getVehiclesOwnedByUser,
+} from '../../../logic/vehicleLogic'
 import { UpdateUserProfileInput } from '../../../schemas/graphql/userObjects'
 import { User } from '../../../schemas/models/user'
 import { Vehicle } from '../../../schemas/models/vehicle'
@@ -38,5 +41,16 @@ export class UserResolver {
         const user = ctx.appUser!
         const em = await ctx.context.db.em.fork()
         return await updateUserProfile(em, user, input)
+    }
+
+    @Query(() => User, {
+        nullable: true,
+    })
+    async getUserBySlug(
+        @Ctx() ctx: Express.Request,
+        @Arg('slug') slug: string,
+    ) {
+        const em = await ctx.context.db.em.fork()
+        return await getUserBySlug(em, slug)
     }
 }

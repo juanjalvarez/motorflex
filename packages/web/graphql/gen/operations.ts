@@ -17,3 +17,29 @@ export type WhoAmIQuery = {
         uniqueSlug: string
     }
 }
+
+export type UserBySlugQueryVariables = Types.Exact<{
+    slug: Types.Scalars['String']
+}>
+
+export type UserBySlugQuery = {
+    __typename?: 'Query'
+    getUserBySlug?: {
+        __typename?: 'User'
+        id: number
+        displayName: string
+        profilePhotoURL?: string | null
+        ownedVehicles: Array<{
+            __typename?: 'Vehicle'
+            id: number
+            name: string
+            description: string
+            vin: string
+            year: number
+            make: string
+            model: string
+            isManual: boolean
+            isElectric: boolean
+        }>
+    } | null
+}

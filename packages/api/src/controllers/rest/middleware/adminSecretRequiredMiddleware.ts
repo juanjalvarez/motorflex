@@ -7,7 +7,7 @@ export const adminSecretRequiredMiddleware: Middleware = async (
 ) => {
     const token = req.headers['admin_secret']
     if (token && token === req.context.secrets.app.adminSecret) {
-        next()
+        return next()
     }
-    res.status(401).send()
+    return res.status(401).send()
 }

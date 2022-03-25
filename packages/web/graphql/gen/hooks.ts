@@ -112,3 +112,72 @@ export type WhoAmIQueryResult = Apollo.QueryResult<
     Types.WhoAmIQuery,
     Types.WhoAmIQueryVariables
 >
+export const UserBySlugDocument = gql`
+    query UserBySlug($slug: String!) {
+        getUserBySlug(slug: $slug) {
+            id
+            displayName
+            profilePhotoURL
+            ownedVehicles {
+                id
+                name
+                description
+                vin
+                year
+                make
+                model
+                isManual
+                isElectric
+            }
+        }
+    }
+`
+
+/**
+ * __useUserBySlugQuery__
+ *
+ * To run a query within a React component, call `useUserBySlugQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserBySlugQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserBySlugQuery({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *   },
+ * });
+ */
+export function useUserBySlugQuery(
+    baseOptions: Apollo.QueryHookOptions<
+        Types.UserBySlugQuery,
+        Types.UserBySlugQueryVariables
+    >,
+) {
+    const options = { ...defaultOptions, ...baseOptions }
+    return Apollo.useQuery<
+        Types.UserBySlugQuery,
+        Types.UserBySlugQueryVariables
+    >(UserBySlugDocument, options)
+}
+export function useUserBySlugLazyQuery(
+    baseOptions?: Apollo.LazyQueryHookOptions<
+        Types.UserBySlugQuery,
+        Types.UserBySlugQueryVariables
+    >,
+) {
+    const options = { ...defaultOptions, ...baseOptions }
+    return Apollo.useLazyQuery<
+        Types.UserBySlugQuery,
+        Types.UserBySlugQueryVariables
+    >(UserBySlugDocument, options)
+}
+export type UserBySlugQueryHookResult = ReturnType<typeof useUserBySlugQuery>
+export type UserBySlugLazyQueryHookResult = ReturnType<
+    typeof useUserBySlugLazyQuery
+>
+export type UserBySlugQueryResult = Apollo.QueryResult<
+    Types.UserBySlugQuery,
+    Types.UserBySlugQueryVariables
+>

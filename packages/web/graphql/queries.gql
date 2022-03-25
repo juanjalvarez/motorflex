@@ -11,3 +11,22 @@ query WhoAmI {
         uniqueSlug
     }
 }
+
+query UserBySlug($slug: String!) {
+    getUserBySlug(slug: $slug) {
+        id
+        displayName
+        profilePhotoURL
+        ownedVehicles {
+            id
+            name
+            description
+            vin
+            year
+            make
+            model
+            isManual
+            isElectric
+        }
+    }
+}

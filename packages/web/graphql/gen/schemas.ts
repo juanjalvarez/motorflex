@@ -52,8 +52,13 @@ export type MutationUpdateVehicleArgs = {
 
 export type Query = {
     __typename?: 'Query'
+    getUserBySlug?: Maybe<User>
     health: Scalars['Float']
     whoAmI: User
+}
+
+export type QueryGetUserBySlugArgs = {
+    slug: Scalars['String']
 }
 
 export type UpdateUserProfileInput = {
